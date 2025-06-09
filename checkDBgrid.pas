@@ -18,7 +18,7 @@ type
     procedure SelectAll;
     procedure SetMultiSelectCheckbox(const Value: boolean);
   protected
-    procedure Loaded; override;  // ¡ç ¿©±â¿¡ Ãß°¡
+    procedure Loaded; override;  // â† ì—¬ê¸°ì— ì¶”ê°€
     procedure DrawCell(ACol, ARow: Longint; ARect: TRect; AState: TGridDrawState); override;
     procedure SetColumnAttributes; override;
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
@@ -47,9 +47,9 @@ end;
 procedure TCheckDBGrid.Loaded;
 begin
   inherited;
-  // ÀÌÁ¦ DefaultRowHeight°¡ È®½ÇÈ÷ ¼³Á¤µÈ µÚÀÌ¹Ç·Î 1.2¹è·Î ´Ã¸³´Ï´Ù.
+  // ì´ì œ DefaultRowHeightê°€ í™•ì‹¤ížˆ ì„¤ì •ëœ ë’¤ì´ë¯€ë¡œ 1.2ë°°ë¡œ ëŠ˜ë¦½ë‹ˆë‹¤.
   //DefaultRowHeight := Round(DefaultRowHeight * 1.5);
-  // (¼±ÅÃ) Çì´õ Çà¸¸ µû·Î ´Ã¸®°í ½ÍÀ¸¸é:
+  // (ì„ íƒ) í—¤ë” í–‰ë§Œ ë”°ë¡œ ëŠ˜ë¦¬ê³  ì‹¶ìœ¼ë©´:
   // RowHeights[0] := Round(RowHeights[0] * 1.2);
 end;
 procedure TCheckDBGrid.DrawCell(ACol, ARow: Integer; ARect: TRect; AState: TGridDrawState);
@@ -266,11 +266,8 @@ procedure TCheckDBGrid.Title0Clicked;
 begin
   if not DataLink.Active or not (dgMultiSelect in Options) or not MultiSelectCheckbox then exit;
 
-  if SelectedRows.Count >= 2 then
-  begin
-    SelectedRows.Clear;
-    SelectedRows.CurrentRowSelected := true;
-  end
+  if SelectedRows.Count = DataLink.DataSource.DataSet.RecordCount then
+    SelectedRows.Clear
   else
     SelectAll;
   DrawTitle0;
